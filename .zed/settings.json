@@ -1,0 +1,20 @@
+{
+  "languages": {
+    "Python": {
+      "language_servers": ["basedpyright", "ruff", "!pyright", "!pylsp"],
+    },
+  },
+  "lsp": {
+    "ruff": {
+      "binary": {
+        "path": "/py/bin/ruff",
+        "arguments": ["server"],
+      },
+    },
+    "basedpyright": {
+      "binary": {
+        "arguments": ["--stdio"],
+      },
+    },
+  },
+}

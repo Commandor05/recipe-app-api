@@ -3,7 +3,9 @@
   "dockerComposeFile": "../docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/app",
-  "appPort": [8000],
+  "forwardPorts": [8000],
   "remoteUser": "django-user",
-  "remoteEnv": { "HOME": "/home/django-user"
+  "remoteEnv": {
+    "HOME": "/home/django-user",
+  },
 }

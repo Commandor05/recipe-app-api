@@ -66,7 +66,9 @@ class PublicUserApiTests(TestCase):
         res = self.client.post(CREATE_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-        user_exists = get_user_model().objects.filter(email=payload["email"]).exists()
+        user_exists = get_user_model().objects.filter(
+            email=payload["email"]
+        ).exists()
         self.assertFalse(user_exists)
 
     def test_create_token_for_user(self):
@@ -125,6 +127,7 @@ class PublicUserApiTests(TestCase):
         typed_res = cast(Response, res)
         self.assertEqual(typed_res.status_code, status.HTTP_401_UNAUTHORIZED)
 
+
 class PrivateUserApiTests(TestCase):
     """Test API requests that require authentication."""
 
@@ -142,7 +145,7 @@ class PrivateUserApiTests(TestCase):
         res = self.client.get(ME_URL)
 
         typed_res = cast(Response, res)
-        self.assertEqual(typed_res.status_code , status.HTTP_200_OK)
+        self.assertEqual(typed_res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, {
             'name': self.user.name,
             'email': self.user.email,
@@ -153,7 +156,10 @@ class PrivateUserApiTests(TestCase):
         res = self.client.post(ME_URL, {})
 
         typed_res = cast(Response, res)
-        self.assertEqual(typed_res.status_code , status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(
+            typed_res.status_code,
+            status.HTTP_405_METHOD_NOT_ALLOWED,
+        )
 
     def test_update_user_profile(self):
         """Test updating the user profile for the authenticated user."""

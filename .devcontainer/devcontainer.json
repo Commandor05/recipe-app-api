@@ -1,8 +1,8 @@
 {
   "name": "Django app",
-  "dockerComposeFile": "../docker-compose.yml",
+  "dockerComposeFile": "docker-compose.devcontainer.yml",
   "service": "app",
-  "workspaceFolder": "/app",
+  "workspaceFolder": "/workspace",
   "forwardPorts": [8000],
   "remoteUser": "django-user",
   "remoteEnv": {

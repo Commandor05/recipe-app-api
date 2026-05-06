@@ -1,17 +1,17 @@
 """
 Tests for models.
 """
-from decimal import Decimal
 
+from decimal import Decimal
 from typing import Any, cast
 
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 
-from core.models import User, UserManager, Recipe, Tag
+from core.models import Ingredient, Recipe, Tag, User, UserManager
 
 
-def create_user(email='user@example.com', password='testpaww123'):
+def create_user(email="user@example.com", password="testpaww123"):
     """Create and return a new user."""
     return get_user_model().objects.create_user(email, password)
 
@@ -65,15 +65,15 @@ class ModelTest(TestCase):
     def test_create_recipe(self):
         """Test creating a recipe is successful."""
         user = self.user_manager().create_user(
-            'test@example.com',
-            'testpass123',
+            "test@example.com",
+            "testpass123",
         )
 
         recipe = Recipe.objects.create(
             user=user,
-            title='Sameple recipe name',
+            title="Sameple recipe name",
             time_minutes=5,
-            price=Decimal('5.50'),
+            price=Decimal("5.50"),
             description="Sample recipe description.",
         )
 
@@ -82,6 +82,13 @@ class ModelTest(TestCase):
     def test_create_tag(self):
         """Test creating a tag is successful."""
         user = create_user()
-        tag = Tag.objects.create(user=user, name='Tag1')
+        tag = Tag.objects.create(user=user, name="Tag1")
 
         self.assertEqual(str(tag), tag.name)
+
+    def test_create_ingredient(self):
+        """Test creating an ingredient is successful."""
+        user = create_user()
+        ingredient = Ingredient.objects.create(user=user, name="Ingredient1")
+
+        self.assertEqual(str(ingredient), ingredient.name)

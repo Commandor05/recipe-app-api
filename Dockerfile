@@ -12,11 +12,11 @@ EXPOSE 8000
 ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
-    apk add --update --no-cache postgresql-client \
+    apk add --update --no-cache postgresql-client jpeg-dev \
     nodejs \
     npm && \
     apk add --update --no-cache --virtual .tmp-build-deps \
-        build-base postgresql-dev musl-dev && \
+        build-base postgresql-dev musl-dev zlib zlib-dev && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ $DEV = "true" ]; \
         then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
@@ -26,6 +26,10 @@ RUN python -m venv /py && \
     apk del .tmp-build-deps && \
     adduser -D -h /home/django-user django-user && \
         mkdir -p /home/django-user && \
+        mkdir -p /vol/web/media && \
+        mkdir -p /vol/web/static && \
+        chown -R django-user:django-user /vol && \
+        chmod -R 755 /vol && \
         chown -R django-user:django-user /home/django-user
 
 RUN npm install -g basedpyright
@@ -35,6 +39,7 @@ RUN npm install -g basedpyright
 #       --disabled-password \
 #        --no-create-home \
 #       django-user
+#
 ENV HOME=/home/django-user
 
 ENV PATH="/py/bin:$PATH"

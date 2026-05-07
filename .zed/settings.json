@@ -15,6 +15,11 @@
       "binary": {
         "arguments": ["--stdio"],
       },
+      "settings": {
+        "python": {
+          "pythonPath": "/py/bin/python",
+        },
+      },
     },
   },
 }

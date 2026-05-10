@@ -4,10 +4,12 @@ Tests for models.
 
 from decimal import Decimal
 from typing import Any, cast
+from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
+from core import models
 from core.models import Ingredient, Recipe, Tag, User, UserManager
 
 
@@ -92,3 +94,12 @@ class ModelTest(TestCase):
         ingredient = Ingredient.objects.create(user=user, name="Ingredient1")
 
         self.assertEqual(str(ingredient), ingredient.name)
+
+    @patch("core.models.uuid.uuid4")
+    def test_recipe_file_neme_uuid(self, mock_uuid):
+        """Test gentating imge path."""
+        uuid = "test-uuid"
+        mock_uuid.return_value = uuid
+        file_path = models.recipe_image_file_path(None, "example.jpg")
+
+        self.assertEquals(file_path, f"uploads/recipe/{uuid}.jpg")
